@@ -1,0 +1,17 @@
+variables:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+
+stages:
+  - build
+
+build:
+  stage: build
+  image: gradle:6.7-jdk15
+  script:
+    - gradle build
+  artifacts:
+    when: always
+    reports:
+      junit: ./**/build/test-results/test/**/TEST-*.xml
+  only:
+    - merge_requests
